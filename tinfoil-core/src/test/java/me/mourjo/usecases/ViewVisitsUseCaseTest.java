@@ -29,7 +29,7 @@ class ViewVisitsUseCaseTest {
 		var sut = new ViewVisitsUseCase(repo, clock);
 
 		assertEquals(
-				List.of("1 days, 15 hours, 50 minutes, 28 seconds ago", "1 minute ago"),
+				List.of("10 days, 15 hours, 50 minutes, 28 seconds ago", "1 minute ago"),
 				sut.viewVisits(customer));
 	}
 
