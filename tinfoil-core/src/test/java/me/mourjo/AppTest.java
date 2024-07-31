@@ -6,9 +6,9 @@ import org.junit.jupiter.api.Test;
 
 public class AppTest {
 
-    @Test
-    void testme() {
-        Assertions.assertEquals(2, 4 - 2);
-    }
+	@Test
+	void testme() {
+		Assertions.assertEquals(2, 4 - 2);
+	}
 
 }

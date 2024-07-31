@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test;
 
 public class AppTest {
 
-    @Test
-    void testme() {
-        Assertions.assertEquals(5, 10 - 5);
-    }
+	@Test
+	void testme() {
+		Assertions.assertEquals(5, 10 - 5);
+	}
 }
