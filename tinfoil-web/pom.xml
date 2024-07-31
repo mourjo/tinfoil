@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <artifactId>tinfoil-web</artifactId>
   <modelVersion>4.0.0</modelVersion>
+
+  <name>tinfoil-web</name>
   <parent>
     <artifactId>tinfoil</artifactId>
     <groupId>me.mourjo</groupId>
     <version>1.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>tinfoil-web</artifactId>
-  <version>1.0-SNAPSHOT</version>
-
-  <name>tinfoil-web</name>
-  <url>https://mourjo.me</url>
-
   <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>21</maven.compiler.source>
     <maven.compiler.target>21</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
+  <url>https://mourjo.me</url>
+
+  <version>1.0-SNAPSHOT</version>
 
 </project>

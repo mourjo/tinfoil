@@ -7,6 +7,6 @@ public class AppTest {
 
     @Test
     void testme() {
-        Assertions.assertEquals(1,4-3);
+        Assertions.assertEquals(1, 4 - 3);
     }
 }
