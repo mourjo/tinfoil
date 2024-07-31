@@ -1,5 +1,6 @@
 package me.mourjo.services;
 
+import java.time.OffsetDateTime;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,21 +11,21 @@ import me.mourjo.entities.Store;
 
 public class InMemoryCustomerRepository implements CustomerRepository {
 
-	Map<Store, List<ZonedDateTime>> visits = new HashMap<>();
+	Map<Store, List<OffsetDateTime>> visits = new HashMap<>();
 
 	@Override
-	public void recordVisit(Store store, Customer customer, ZonedDateTime timestamp) {
+	public void recordVisit(Store store, Customer customer, OffsetDateTime timestamp) {
 		visits.putIfAbsent(store, new ArrayList<>());
 		visits.get(store).add(timestamp);
 	}
 
 	@Override
-	public Map<Store, List<ZonedDateTime>> getAllVisits(Customer customer) {
+	public Map<Store, List<OffsetDateTime>> getAllVisits(Customer customer) {
 		return visits;
 	}
 
 	@Override
-	public List<ZonedDateTime> getStoreVisits(Store store, Customer customer) {
+	public List<OffsetDateTime> getStoreVisits(Store store, Customer customer) {
 		return visits.get(store);
 	}
 

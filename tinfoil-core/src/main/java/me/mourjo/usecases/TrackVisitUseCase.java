@@ -1,5 +1,6 @@
 package me.mourjo.usecases;
 
+import java.time.OffsetDateTime;
 import java.time.ZonedDateTime;
 import me.mourjo.entities.Customer;
 import me.mourjo.entities.Store;
@@ -10,7 +11,7 @@ public class TrackVisitUseCase {
 	CustomerRepository repository;
 
 	public String visit(Store store, Customer customer) {
-		repository.recordVisit(store, customer, ZonedDateTime.now());
+		repository.recordVisit(store, customer, OffsetDateTime.now());
 		return "Welcome, " + customer.getName();
 	}
 }

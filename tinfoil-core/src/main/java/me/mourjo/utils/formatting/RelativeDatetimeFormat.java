@@ -3,6 +3,7 @@ package me.mourjo.utils.formatting;
 import static java.util.function.Predicate.not;
 
 import java.time.Clock;
+import java.time.OffsetDateTime;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
@@ -21,7 +22,7 @@ public class RelativeDatetimeFormat {
 		return number + " " + unitInWords;
 	}
 
-	public static String formatDatetime(Clock clock, ZonedDateTime dt) {
+	public static String formatDatetime(Clock clock, OffsetDateTime dt) {
 		var now = ZonedDateTime.now(clock);
 
 		if (ChronoUnit.MILLIS.between(dt, now) < 1000) {

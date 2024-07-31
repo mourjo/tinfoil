@@ -1,6 +1,7 @@
 package me.mourjo.usecases;
 
 import java.time.Clock;
+import java.time.OffsetDateTime;
 import java.time.ZonedDateTime;
 import java.time.chrono.ChronoZonedDateTime;
 import java.util.HashMap;
@@ -26,8 +27,8 @@ public class ViewVisitsUseCase {
 		Map<Store, List<String>> result = new HashMap<>();
 		var storeVisits = repository.getAllVisits(customer);
 
-		for (Entry<Store, List<ZonedDateTime>> visit : storeVisits.entrySet()) {
-			visit.getValue().sort(ChronoZonedDateTime::compareTo);
+		for (Entry<Store, List<OffsetDateTime>> visit : storeVisits.entrySet()) {
+			visit.getValue().sort(OffsetDateTime::compareTo);
 			var strings = visit.getValue().stream()
 					.map(dateTime -> RelativeDatetimeFormat.formatDatetime(clock, dateTime))
 					.toList();

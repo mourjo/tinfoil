@@ -1,5 +1,6 @@
 package me.mourjo.services;
 
+import java.time.OffsetDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
@@ -8,11 +9,11 @@ import me.mourjo.entities.Store;
 
 public interface CustomerRepository {
 
-	void recordVisit(Store store, Customer customer, ZonedDateTime time);
+	void recordVisit(Store store, Customer customer, OffsetDateTime time);
 
-	Map<Store, List<ZonedDateTime>> getAllVisits(Customer customer);
+	Map<Store, List<OffsetDateTime>> getAllVisits(Customer customer);
 
-	List<ZonedDateTime> getStoreVisits(Store store, Customer customer);
+	List<OffsetDateTime> getStoreVisits(Store store, Customer customer);
 
 	void delete(Customer customer);
 }

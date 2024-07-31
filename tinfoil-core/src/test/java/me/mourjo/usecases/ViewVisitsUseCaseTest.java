@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.Clock;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
@@ -18,7 +19,7 @@ import org.junit.jupiter.api.Test;
 
 class ViewVisitsUseCaseTest {
 
-	final ZonedDateTime fixedTime = ZonedDateTime.of(
+	final OffsetDateTime fixedTime = OffsetDateTime.of(
 			LocalDateTime.of(2024, 7, 31, 1, 2, 28),
 			ZoneOffset.UTC);
 	final Clock clock = Clock.fixed(fixedTime.toInstant(), ZoneId.of("Etc/UTC"));
@@ -38,7 +39,7 @@ class ViewVisitsUseCaseTest {
 	@Test
 	void multipleVisitsTest() {
 		var firstVisitLocalTime = LocalDateTime.of(2024, 7, 20, 11, 12, 0);
-		var firstVisitTime = ZonedDateTime.of(firstVisitLocalTime, ZoneId.of("Europe/Amsterdam"));
+		var firstVisitTime = ZonedDateTime.of(firstVisitLocalTime, ZoneId.of("Europe/Amsterdam")).toOffsetDateTime();
 		var secondVisitTime = fixedTime.minusDays(3).minusHours(8).minusSeconds(2);
 
 		repo.recordVisit(store, customer, firstVisitTime);
@@ -80,7 +81,7 @@ class ViewVisitsUseCaseTest {
 	@Test
 	void viewVisitsFromFutureTest() {
 		var localTime = LocalDateTime.of(2030, 12, 2, 1, 1, 0);
-		var firstVisitTime = ZonedDateTime.of(localTime, ZoneId.of("Europe/Amsterdam"));
+		var firstVisitTime = ZonedDateTime.of(localTime, ZoneId.of("Europe/Amsterdam")).toOffsetDateTime();
 
 		repo.recordVisit(store, customer, firstVisitTime);
 
