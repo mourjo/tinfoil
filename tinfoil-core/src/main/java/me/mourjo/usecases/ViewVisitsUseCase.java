@@ -30,7 +30,6 @@ public class ViewVisitsUseCase {
 	}
 
 	private String dateFormat(ZonedDateTime dt) {
-
 		var now = ZonedDateTime.now(clock);
 
 		if (ChronoUnit.MILLIS.between(dt, now) < 1000) {

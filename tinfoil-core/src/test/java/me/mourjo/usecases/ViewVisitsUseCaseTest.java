@@ -18,18 +18,59 @@ class ViewVisitsUseCaseTest {
 			LocalDateTime.of(2024, 7, 31, 1, 2, 28),
 			ZoneOffset.UTC);
 	final Clock clock = Clock.fixed(fixedTime.toInstant(), ZoneId.of("Etc/UTC"));
+	final Customer customer = new Customer("A customer");;
 
 	@Test
-	void viewVisitsTest() {
-		var customer = new Customer("A customer");
-		var localTime = LocalDateTime.of(2024, 8, 20, 11, 12, 0);
-		var july20 = ZonedDateTime.of(localTime, ZoneId.of("Europe/Amsterdam"));
-		var aMinuteAgo = fixedTime.minusMinutes(1);
-		var repo = new CustomerRepoImpl(List.of(july20, aMinuteAgo));
+	void multipleVisitsTest() {
+		var firstVisitLocalTime = LocalDateTime.of(2024, 7, 20, 11, 12, 0);
+		var firstVisitTime = ZonedDateTime.of(firstVisitLocalTime, ZoneId.of("Europe/Amsterdam"));
+
+		var secondVisitTime = fixedTime.minusDays(3).minusHours(8).minusSeconds(2);
+
+		var repo = new CustomerRepoImpl(List.of(firstVisitTime, secondVisitTime));
 		var sut = new ViewVisitsUseCase(repo, clock);
 
 		assertEquals(
-				List.of("10 days, 15 hours, 50 minutes, 28 seconds ago", "1 minute ago"),
+				List.of(
+						"10 days, 15 hours, 50 minutes, 28 seconds ago",
+						"3 days, 8 hours, 2 seconds ago"),
+				sut.viewVisits(customer));
+	}
+
+	@Test
+	void singularWordsTest() {
+		var firstVisitTime = fixedTime.minusDays(1);
+		var secondVisitTime = fixedTime.minusMinutes(1);
+		var repo = new CustomerRepoImpl(List.of(firstVisitTime, secondVisitTime));
+		var sut = new ViewVisitsUseCase(repo, clock);
+
+		assertEquals(
+				List.of("1 day ago", "1 minute ago"),
+				sut.viewVisits(customer));
+	}
+
+	@Test
+	void pluralWordsTest() {
+		var firstVisitTime = fixedTime.minusDays(2);
+		var secondVisitTime = fixedTime.minusSeconds(3);
+		var repo = new CustomerRepoImpl(List.of(firstVisitTime, secondVisitTime));
+		var sut = new ViewVisitsUseCase(repo, clock);
+
+		assertEquals(
+				List.of("2 days ago", "3 seconds ago"),
+				sut.viewVisits(customer));
+	}
+
+	@Test
+	void viewVisitsFromFutureTest() {
+		var localTime = LocalDateTime.of(2030, 12, 2, 1, 1, 0);
+		var firstVisitTime = ZonedDateTime.of(localTime, ZoneId.of("Europe/Amsterdam"));
+
+		var repo = new CustomerRepoImpl(List.of(firstVisitTime));
+		var sut = new ViewVisitsUseCase(repo, clock);
+
+		assertEquals(
+				List.of("Right now"),
 				sut.viewVisits(customer));
 	}
 
