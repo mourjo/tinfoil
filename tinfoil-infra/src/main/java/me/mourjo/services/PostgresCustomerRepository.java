@@ -24,6 +24,26 @@ import org.jooq.impl.DSL;
 
 @Slf4j
 public class PostgresCustomerRepository implements CustomerRepository {
+	private final String username;
+	private final String password;
+	private final String connectionString;
+
+	public PostgresCustomerRepository(String host, String port, String database, String username,
+			String password) {
+		this.username = username;
+		this.password = password;
+		connectionString = "jdbc:postgresql://%s:%s/%s".formatted(host, port, database);
+	}
+
+	public PostgresCustomerRepository(String username, String password, String database) {
+		this("localhost", "5432", database, "justin", "hat");
+	}
+
+	@SneakyThrows
+	private Connection getConnection() {
+		return DriverManager.getConnection(connectionString, username, password);
+	}
+
 	private Table<Record> customerTable = table("customer");
 	private Table<Record> visitTable = table("visit");
 	private Table<Record> storeTable = table("store");
@@ -36,7 +56,7 @@ public class PostgresCustomerRepository implements CustomerRepository {
 	@SneakyThrows
 	@Override
 	public void recordVisit(Store store, Customer customer, OffsetDateTime time) {
-		try (Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tinfoil_db", "justin", "hat")) {
+		try (Connection conn = getConnection()) {
 			DSL.using(conn, SQLDialect.POSTGRES)
 					.insertInto(customerTable)
 					.columns(nameField)
@@ -45,7 +65,7 @@ public class PostgresCustomerRepository implements CustomerRepository {
 					.execute();
 		}
 
-		try (Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tinfoil_db", "justin", "hat")) {
+		try (Connection conn = getConnection()) {
 			DSL.using(conn, SQLDialect.POSTGRES)
 					.insertInto(storeTable)
 					.columns(nameField)
@@ -54,7 +74,7 @@ public class PostgresCustomerRepository implements CustomerRepository {
 					.execute();
 		}
 
-		try (Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tinfoil_db", "justin", "hat")) {
+		try (Connection conn = getConnection()) {
 			DSL.using(conn, SQLDialect.POSTGRES)
 					.insertInto(visitTable)
 					.columns(customerField, storeField, visitedAtField)
@@ -67,7 +87,7 @@ public class PostgresCustomerRepository implements CustomerRepository {
 	@Override
 	public Map<Store, List<OffsetDateTime>> getAllVisits(Customer customer) {
 		Map<Store, List<OffsetDateTime>> visits = new HashMap<>();
-		try (Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tinfoil_db", "justin", "hat")) {
+		try (Connection conn = getConnection()) {
 
 			var rows = DSL.using(conn, SQLDialect.POSTGRES)
 					.select(star)
@@ -97,12 +117,22 @@ public class PostgresCustomerRepository implements CustomerRepository {
 
 	}
 
-	public static void main(String[] args) {
-		Store s = new Store("Albert Heijn");
-		Customer c = new Customer("Justin");
-		var repo = new PostgresCustomerRepository();
-		repo.recordVisit(s, c, OffsetDateTime.now());
-		System.out.println(repo.getAllVisits(c));
+	@SneakyThrows
+	void truncate() {
+		try (Connection conn = getConnection()) {
+			DSL.using(conn, SQLDialect.POSTGRES)
+					.delete(visitTable)
+					.execute();
 
+			DSL.using(conn, SQLDialect.POSTGRES)
+					.delete(customerTable)
+					.execute();
+
+			DSL.using(conn, SQLDialect.POSTGRES)
+					.delete(storeTable)
+					.execute();
+
+
+		}
 	}
 }
