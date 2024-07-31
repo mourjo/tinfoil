@@ -6,12 +6,15 @@ import java.time.Clock;
 import java.time.ZonedDateTime;
 import java.time.chrono.ChronoZonedDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import me.mourjo.entities.Customer;
+import me.mourjo.entities.Store;
 import me.mourjo.services.CustomerRepository;
 
 public class ViewVisitsUseCase {
@@ -34,12 +37,17 @@ public class ViewVisitsUseCase {
 		return number + " " + unitInWords;
 	}
 
-	public List<String> viewVisits(Customer customer) {
-		var visits = new ArrayList<>(repository.getVisits(customer));
+	public Map<Store, List<String>> viewVisits(Customer customer) {
+		Map<Store, List<String>> result = new HashMap<>();
+		var storeVisits = new HashMap<>(repository.getAllVisits(customer));
 
-		visits.sort(ChronoZonedDateTime::compareTo);
+		for (Entry<Store, List<ZonedDateTime>> visit : storeVisits.entrySet()) {
+			visit.getValue().sort(ChronoZonedDateTime::compareTo);
+			var strings = visit.getValue().stream().map(this::dateFormat).toList();
+			result.put(visit.getKey(), strings);
+		}
 
-		return visits.stream().map(dt -> dateFormat(dt)).toList();
+		return result;
 	}
 
 	private String dateFormat(ZonedDateTime dt) {
