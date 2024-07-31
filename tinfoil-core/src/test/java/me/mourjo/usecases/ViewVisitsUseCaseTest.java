@@ -7,13 +7,12 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import me.mourjo.entities.Customer;
 import me.mourjo.entities.Store;
 import me.mourjo.services.CustomerRepository;
+import me.mourjo.services.InMemoryCustomerRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -30,7 +29,7 @@ class ViewVisitsUseCaseTest {
 
 	@BeforeEach
 	void startup() {
-		repo = new CustomerRepoImpl();
+		repo = new InMemoryCustomerRepository();
 		sut = new ViewVisitsUseCase(repo, clock);
 		store = new Store("A store");
 		customer = new Customer("A customer");
@@ -90,29 +89,4 @@ class ViewVisitsUseCaseTest {
 				sut.viewVisits(customer));
 	}
 
-	private static class CustomerRepoImpl implements CustomerRepository {
-
-		Map<Store, List<ZonedDateTime>> visits = new HashMap<>();
-
-		@Override
-		public void recordVisit(Store store, Customer customer, ZonedDateTime timestamp) {
-			visits.putIfAbsent(store, new ArrayList<>());
-			visits.get(store).add(timestamp);
-		}
-
-		@Override
-		public Map<Store, List<ZonedDateTime>> getAllVisits(Customer customer) {
-			return visits;
-		}
-
-		@Override
-		public List<ZonedDateTime> getStoreVisits(Store store, Customer customer) {
-			return visits.get(store);
-		}
-
-		@Override
-		public void delete(Customer customer) {
-
-		}
-	}
 }
