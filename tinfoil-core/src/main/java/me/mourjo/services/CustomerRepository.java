@@ -10,9 +10,7 @@ public interface CustomerRepository {
 
 	void recordVisit(Store store, Customer customer, OffsetDateTime time);
 
-	Map<Store, List<OffsetDateTime>> getAllVisits(Customer customer);
-
-	List<OffsetDateTime> getStoreVisits(Store store, Customer customer);
+	Map<Store, List<OffsetDateTime>> visitsInChronologicalOrder(Customer customer);
 
 	void delete(Customer customer);
 }

@@ -1,8 +1,8 @@
 package me.mourjo.services;
 
-import java.time.LocalDateTime;
+import static me.mourjo.utils.datetime.DatetimeConverter.utcOffsetDateTime;
+
 import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -24,24 +24,22 @@ class PostgresCustomerRepositoryTest {
 
 	@Test
 	public void visitsFromDB() {
-		Store s = new Store("Albert Heijn");
-		Customer c = new Customer("Dustin");
+		Store store = new Store("Albert Heijn");
+		Customer customer = new Customer("Dustin");
 
-		var firstVisitTime = OffsetDateTime.of(LocalDateTime.of(2024, 6, 9, 10, 2, 30),
-				ZoneOffset.UTC);
-		var secondVisitTime = OffsetDateTime.of(LocalDateTime.of(2024, 7, 10, 1, 8, 38),
-				ZoneOffset.UTC);
+		var firstVisitTime = utcOffsetDateTime(2024, 6, 9, 10, 2, 30);
+		var secondVisitTime = utcOffsetDateTime(2024, 7, 10, 1, 8, 38);
 
-		repo.recordVisit(s, c, firstVisitTime);
-		repo.recordVisit(s, c, secondVisitTime);
+		repo.recordVisit(store, customer, firstVisitTime);
+		repo.recordVisit(store, customer, secondVisitTime);
 
-		Map<Store, List<OffsetDateTime>> visits = repo.getAllVisits(c);
-		Assertions.assertEquals(Set.of(s), visits.keySet());
+		Map<Store, List<OffsetDateTime>> visits = repo.visitsInChronologicalOrder(customer);
+		Assertions.assertEquals(Set.of(store), visits.keySet());
 		Assertions.assertEquals(
 				List.of(
 						firstVisitTime.toInstant(),
 						secondVisitTime.toInstant()
 				),
-				visits.get(s).stream().map(OffsetDateTime::toInstant).toList());
+				visits.get(store).stream().map(OffsetDateTime::toInstant).toList());
 	}
 }

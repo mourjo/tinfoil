@@ -16,16 +16,12 @@ public class InMemoryCustomerRepository implements CustomerRepository {
 	public void recordVisit(Store store, Customer customer, OffsetDateTime timestamp) {
 		visits.putIfAbsent(store, new ArrayList<>());
 		visits.get(store).add(timestamp);
+		visits.get(store).sort(OffsetDateTime::compareTo);
 	}
 
 	@Override
-	public Map<Store, List<OffsetDateTime>> getAllVisits(Customer customer) {
+	public Map<Store, List<OffsetDateTime>> visitsInChronologicalOrder(Customer customer) {
 		return visits;
-	}
-
-	@Override
-	public List<OffsetDateTime> getStoreVisits(Store store, Customer customer) {
-		return visits.get(store);
 	}
 
 	@Override

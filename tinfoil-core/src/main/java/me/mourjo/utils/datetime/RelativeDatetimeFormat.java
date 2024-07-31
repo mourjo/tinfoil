@@ -1,4 +1,4 @@
-package me.mourjo.utils.formatting;
+package me.mourjo.utils.datetime;
 
 import static java.util.function.Predicate.not;
 

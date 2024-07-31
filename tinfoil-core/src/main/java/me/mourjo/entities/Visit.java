@@ -16,14 +16,14 @@ public class Visit {
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (this == o) {
+	public boolean equals(Object other) {
+		if (this == other) {
 			return true;
 		}
-		if (o == null || getClass() != o.getClass()) {
+		if (other == null || getClass() != other.getClass()) {
 			return false;
 		}
-		Visit visit = (Visit) o;
+		Visit visit = (Visit) other;
 		return Objects.equals(customer, visit.customer) && Objects.equals(store,
 				visit.store);
 	}

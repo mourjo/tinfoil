@@ -9,7 +9,7 @@ import java.util.Map.Entry;
 import me.mourjo.entities.Customer;
 import me.mourjo.entities.Store;
 import me.mourjo.services.CustomerRepository;
-import me.mourjo.utils.formatting.RelativeDatetimeFormat;
+import me.mourjo.utils.datetime.RelativeDatetimeFormat;
 
 public class ViewVisitsUseCase {
 
@@ -23,10 +23,9 @@ public class ViewVisitsUseCase {
 
 	public Map<Store, List<String>> viewVisits(Customer customer) {
 		Map<Store, List<String>> result = new HashMap<>();
-		var storeVisits = repository.getAllVisits(customer);
+		var storeVisits = repository.visitsInChronologicalOrder(customer);
 
 		for (Entry<Store, List<OffsetDateTime>> visit : storeVisits.entrySet()) {
-			visit.getValue().sort(OffsetDateTime::compareTo);
 			var strings = visit.getValue().stream()
 					.map(dateTime -> RelativeDatetimeFormat.formatDatetime(clock, dateTime))
 					.toList();
