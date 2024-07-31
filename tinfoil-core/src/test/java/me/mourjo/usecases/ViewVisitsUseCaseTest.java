@@ -39,7 +39,8 @@ class ViewVisitsUseCaseTest {
 	@Test
 	void multipleVisitsTest() {
 		var firstVisitLocalTime = LocalDateTime.of(2024, 7, 20, 11, 12, 0);
-		var firstVisitTime = ZonedDateTime.of(firstVisitLocalTime, ZoneId.of("Europe/Amsterdam")).toOffsetDateTime();
+		var firstVisitTime = ZonedDateTime.of(firstVisitLocalTime, ZoneId.of("Europe/Amsterdam"))
+				.toOffsetDateTime();
 		var secondVisitTime = fixedTime.minusDays(3).minusHours(8).minusSeconds(2);
 
 		repo.recordVisit(store, customer, firstVisitTime);
@@ -81,7 +82,8 @@ class ViewVisitsUseCaseTest {
 	@Test
 	void viewVisitsFromFutureTest() {
 		var localTime = LocalDateTime.of(2030, 12, 2, 1, 1, 0);
-		var firstVisitTime = ZonedDateTime.of(localTime, ZoneId.of("Europe/Amsterdam")).toOffsetDateTime();
+		var firstVisitTime = ZonedDateTime.of(localTime, ZoneId.of("Europe/Amsterdam"))
+				.toOffsetDateTime();
 
 		repo.recordVisit(store, customer, firstVisitTime);
 

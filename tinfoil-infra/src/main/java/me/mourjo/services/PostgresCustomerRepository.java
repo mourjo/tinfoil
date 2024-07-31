@@ -24,26 +24,10 @@ import org.jooq.impl.DSL;
 
 @Slf4j
 public class PostgresCustomerRepository implements CustomerRepository {
+
 	private final String username;
 	private final String password;
 	private final String connectionString;
-
-	public PostgresCustomerRepository(String host, String port, String database, String username,
-			String password) {
-		this.username = username;
-		this.password = password;
-		connectionString = "jdbc:postgresql://%s:%s/%s".formatted(host, port, database);
-	}
-
-	public PostgresCustomerRepository(String username, String password, String database) {
-		this("localhost", "5432", database, "justin", "hat");
-	}
-
-	@SneakyThrows
-	private Connection getConnection() {
-		return DriverManager.getConnection(connectionString, username, password);
-	}
-
 	private Table<Record> customerTable = table("customer");
 	private Table<Record> visitTable = table("visit");
 	private Table<Record> storeTable = table("store");
@@ -52,6 +36,20 @@ public class PostgresCustomerRepository implements CustomerRepository {
 	private Field<String> storeField = field("store", String.class);
 	private Field<OffsetDateTime> visitedAtField = field("visited_at", OffsetDateTime.class);
 	private Asterisk star = asterisk();
+	public PostgresCustomerRepository(String host, String port, String database, String username,
+			String password) {
+		this.username = username;
+		this.password = password;
+		connectionString = "jdbc:postgresql://%s:%s/%s".formatted(host, port, database);
+	}
+	public PostgresCustomerRepository(String username, String password, String database) {
+		this("localhost", "5432", database, "justin", "hat");
+	}
+
+	@SneakyThrows
+	private Connection getConnection() {
+		return DriverManager.getConnection(connectionString, username, password);
+	}
 
 	@SneakyThrows
 	@Override
@@ -95,7 +93,7 @@ public class PostgresCustomerRepository implements CustomerRepository {
 					.where(customerField.equal(customer.getName()))
 					.fetch();
 
-			for (var visit :  rows) {
+			for (var visit : rows) {
 				String storeName = visit.get(storeField);
 				Store store = new Store(storeName);
 

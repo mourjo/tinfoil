@@ -1,7 +1,6 @@
 package me.mourjo.usecases;
 
 import java.time.OffsetDateTime;
-import java.time.ZonedDateTime;
 import me.mourjo.entities.Customer;
 import me.mourjo.entities.Store;
 import me.mourjo.services.CustomerRepository;
