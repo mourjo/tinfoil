@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:16.3
+    container_name: postgres_tinfoil
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - POSTGRES_HOST_AUTH_METHOD=trust
+      - POSTGRES_DB=tinfoil_db
+      - POSTGRES_PASSWORD=hat
+      - POSTGRES_USER=justin
+    ports:
+      - '5432:5432'
+    volumes:
+      - './tmp/volumes/postgres:/var/lib/postgresql/data'
+
