@@ -14,26 +14,28 @@ import org.junit.jupiter.api.Test;
 
 class ViewVisitsUseCaseTest {
 
-	final ZonedDateTime fixedTime = ZonedDateTime.of(LocalDateTime.of(2024, 7, 31, 1, 2, 28),
+	final ZonedDateTime fixedTime = ZonedDateTime.of(
+			LocalDateTime.of(2024, 7, 31, 1, 2, 28),
 			ZoneOffset.UTC);
 	final Clock clock = Clock.fixed(fixedTime.toInstant(), ZoneId.of("Etc/UTC"));
 
 	@Test
 	void viewVisitsTest() {
-		var ts = ZonedDateTime.of(LocalDateTime.of(2024, 7, 20, 11, 12, 0),
-				ZoneId.of("Europe/Amsterdam"));
+		var customer = new Customer("A customer");
+		var localTime = LocalDateTime.of(2024, 7, 20, 11, 12, 0);
+		var july20 = ZonedDateTime.of(localTime, ZoneId.of("Europe/Amsterdam"));
 		var aMinuteAgo = fixedTime.minusMinutes(1);
-		var repo = new TestRepo(List.of(ts, aMinuteAgo));
-		var actual = new ViewVisitsUseCase(repo, clock).viewVisits(new Customer("A customer"));
-		assertEquals(List.of("10 days, 15 hours, 50 minutes, 28 seconds ago", "1 minute ago"),
-				actual);
+		var repo = new CustomerRepoImpl(List.of(july20, aMinuteAgo));
+		var sut = new ViewVisitsUseCase(repo, clock);
+
+		assertEquals(
+				List.of("10 days, 15 hours, 50 minutes, 28 seconds ago", "1 minute ago"),
+				sut.viewVisits(customer));
 	}
 
-	private class TestRepo implements CustomerRepository {
-
+	private static class CustomerRepoImpl implements CustomerRepository {
 		List<ZonedDateTime> visits;
-
-		public TestRepo(List<ZonedDateTime> visits) {
+		public CustomerRepoImpl(List<ZonedDateTime> visits) {
 			this.visits = visits;
 		}
 
