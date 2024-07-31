@@ -4,6 +4,30 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <artifactId>tinfoil</artifactId>
 
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <!-- See https://maven.apache.org/surefire/maven-surefire-plugin/test-mojo.html-->
+          <failIfNoTests>true</failIfNoTests>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <artifactId>junit-platform-surefire-provider</artifactId>
+            <groupId>org.junit.platform</groupId>
+            <version>${junit.platform.version}</version>
+          </dependency>
+          <dependency>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <groupId>org.junit.jupiter</groupId>
+            <version>${junit.jupiter.version}</version>
+          </dependency>
+        </dependencies>
+        <version>3.3.1</version>
+      </plugin>
+    </plugins>
+  </build>
   <dependencies>
     <dependency>
       <artifactId>junit-jupiter-api</artifactId>
@@ -13,51 +37,27 @@
     </dependency>
   </dependencies>
   <description>A simple tinfoil.</description>
-  <groupId>me.mourjo</groupId>
 
+  <groupId>me.mourjo</groupId>
   <modelVersion>4.0.0</modelVersion>
   <modules>
     <module>tinfoil-web</module>
     <module>tinfoil-core</module>
     <module>tinfoil-infra</module>
   </modules>
+
   <name>tinfoil</name>
 
   <packaging>pom</packaging>
 
   <properties>
+    <junit.jupiter.version>5.10.3</junit.jupiter.version>
+    <junit.platform.version>1.3.2</junit.platform.version>
     <maven.compiler.source>21</maven.compiler.source>
     <maven.compiler.target>21</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <junit.jupiter.version>5.10.3</junit.jupiter.version>
-    <junit.platform.version>1.3.2</junit.platform.version>
   </properties>
-
   <url>https://mourjo.me</url>
-  <version>1.0-SNAPSHOT</version>
 
-  <build>
-    <plugins>
-      <plugin>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.3.1</version>
-        <configuration>
-          <!-- See https://maven.apache.org/surefire/maven-surefire-plugin/test-mojo.html-->
-          <failIfNoTests>true</failIfNoTests>
-        </configuration>
-        <dependencies>
-          <dependency>
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-surefire-provider</artifactId>
-            <version>${junit.platform.version}</version>
-          </dependency>
-          <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>${junit.jupiter.version}</version>
-          </dependency>
-        </dependencies>
-      </plugin>
-    </plugins>
-  </build>
+  <version>1.0-SNAPSHOT</version>
 </project>
