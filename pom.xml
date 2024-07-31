@@ -4,18 +4,6 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <artifactId>tinfoil</artifactId>
 
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.junit</groupId>
-        <artifactId>junit-bom</artifactId>
-        <version>5.10.3</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
-
   <build>
     <pluginManagement>
       <plugins>
@@ -24,20 +12,21 @@
           <version>3.1.2</version>
         </plugin>
         <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
-          <version>3.1.2</version>
-
           <configuration>
             <!-- See https://maven.apache.org/surefire/maven-surefire-plugin/test-mojo.html-->
             <failIfNoTests>true</failIfNoTests>
           </configuration>
+          <groupId>org.apache.maven.plugins</groupId>
+
+          <version>3.1.2</version>
         </plugin>
 
       </plugins>
     </pluginManagement>
 
   </build>
+
   <dependencies>
     <dependency>
       <artifactId>junit-jupiter</artifactId>
@@ -46,16 +35,27 @@
     </dependency>
 
     <dependency>
-      <groupId>org.junit.platform</groupId>
       <artifactId>junit-platform-launcher</artifactId>
+      <groupId>org.junit.platform</groupId>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-engine</artifactId>
+      <groupId>org.junit.jupiter</groupId>
       <scope>test</scope>
     </dependency>
   </dependencies>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <artifactId>junit-bom</artifactId>
+        <groupId>org.junit</groupId>
+        <scope>import</scope>
+        <type>pom</type>
+        <version>5.10.3</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
   <description>A simple tinfoil.</description>
 
   <groupId>me.mourjo</groupId>

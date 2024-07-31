@@ -18,7 +18,7 @@ class ViewVisitsUseCaseTest {
 			LocalDateTime.of(2024, 7, 31, 1, 2, 28),
 			ZoneOffset.UTC);
 	final Clock clock = Clock.fixed(fixedTime.toInstant(), ZoneId.of("Etc/UTC"));
-	final Customer customer = new Customer("A customer");;
+	final Customer customer = new Customer("A customer");
 
 	@Test
 	void multipleVisitsTest() {
@@ -75,7 +75,9 @@ class ViewVisitsUseCaseTest {
 	}
 
 	private static class CustomerRepoImpl implements CustomerRepository {
+
 		List<ZonedDateTime> visits;
+
 		public CustomerRepoImpl(List<ZonedDateTime> visits) {
 			this.visits = visits;
 		}

@@ -1,11 +1,14 @@
 package me.mourjo.usecases;
 
+import static java.util.function.Predicate.not;
+
 import java.time.Clock;
 import java.time.ZonedDateTime;
 import java.time.chrono.ChronoZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import me.mourjo.entities.Customer;
@@ -19,6 +22,16 @@ public class ViewVisitsUseCase {
 	public ViewVisitsUseCase(CustomerRepository repository, Clock clock) {
 		this.repository = repository;
 		this.clock = clock;
+	}
+
+	private static String inWords(long number, ChronoUnit unit) {
+		if (number == 0) {
+			return null;
+		}
+		String unitNamePlural = unit.name().toLowerCase();
+		String unitNameSingular = unitNamePlural.substring(0, unitNamePlural.length() - 1);
+		String unitInWords = number == 1 ? unitNameSingular : unitNamePlural;
+		return number + " " + unitInWords;
 	}
 
 	public List<String> viewVisits(Customer customer) {
@@ -48,11 +61,11 @@ public class ViewVisitsUseCase {
 		long nSecs = ChronoUnit.SECONDS.between(dt, now);
 
 		return Stream.of(
-						nDays != 0 ? (nDays == 1 ? (nDays + " day") : (nDays + " days")) : "",
-						nHours != 0 ? (nHours == 1 ? (nHours + " hour") : (nHours + " hours")) : "",
-						nMins != 0 ? (nMins == 1 ? (nMins + " minute") : (nMins + " minutes")) : "",
-						nSecs != 0 ? (nSecs == 1 ? (nSecs + " second") : (nSecs + " seconds")) : ""
-				).filter(s -> !s.isBlank())
+						inWords(nDays, ChronoUnit.DAYS),
+						inWords(nHours, ChronoUnit.HOURS),
+						inWords(nMins, ChronoUnit.MINUTES),
+						inWords(nSecs, ChronoUnit.SECONDS)
+				).filter(not(Objects::isNull))
 				.collect(Collectors.joining(", "))
 				+ " ago";
 	}
