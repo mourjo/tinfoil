@@ -22,7 +22,7 @@ class ViewVisitsUseCaseTest {
 	@Test
 	void viewVisitsTest() {
 		var customer = new Customer("A customer");
-		var localTime = LocalDateTime.of(2024, 7, 20, 11, 12, 0);
+		var localTime = LocalDateTime.of(2024, 8, 20, 11, 12, 0);
 		var july20 = ZonedDateTime.of(localTime, ZoneId.of("Europe/Amsterdam"));
 		var aMinuteAgo = fixedTime.minusMinutes(1);
 		var repo = new CustomerRepoImpl(List.of(july20, aMinuteAgo));
