@@ -10,3 +10,4 @@ PID=$!
 sleep 5;
 
 curl -s -X 'POST' 'http://localhost:7002/visit/albert-heijn/mourjo' && curl -s -X 'GET' 'http://localhost:7002/visits/all/mourjo'
+
