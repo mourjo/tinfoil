@@ -12,9 +12,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class PostgresCustomerRepositoryTest {
+class PostgresVisitRepositoryTest {
 
-	PostgresCustomerRepository repo = new PostgresCustomerRepository("justin", "hat",
+	PostgresVisitRepository repo = new PostgresVisitRepository("justin", "hat",
 			"tinfoil_test_db");
 
 	@BeforeEach

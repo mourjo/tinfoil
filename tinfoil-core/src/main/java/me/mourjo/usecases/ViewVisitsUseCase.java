@@ -8,17 +8,22 @@ import java.util.Map;
 import java.util.Map.Entry;
 import me.mourjo.entities.Customer;
 import me.mourjo.entities.Store;
-import me.mourjo.services.CustomerRepository;
+import me.mourjo.services.VisitRepository;
 import me.mourjo.utils.datetime.RelativeDatetimeFormat;
 
 public class ViewVisitsUseCase {
 
-	CustomerRepository repository;
+	VisitRepository repository;
 	Clock clock;
 
-	public ViewVisitsUseCase(CustomerRepository repository, Clock clock) {
+	public ViewVisitsUseCase(VisitRepository repository, Clock clock) {
 		this.repository = repository;
 		this.clock = clock;
+	}
+
+	public ViewVisitsUseCase(VisitRepository repository) {
+		this.repository = repository;
+		this.clock = Clock.systemDefaultZone();
 	}
 
 	public Map<Store, List<String>> viewVisits(Customer customer) {

@@ -1,11 +1,11 @@
 package me.mourjo.usecases;
 
 import me.mourjo.entities.Customer;
-import me.mourjo.services.CustomerRepository;
+import me.mourjo.services.VisitRepository;
 
 public class ForgetMeUseCase {
 
-	CustomerRepository repository;
+	VisitRepository repository;
 
 	public String forgetMe(Customer customer) {
 		repository.delete(customer);

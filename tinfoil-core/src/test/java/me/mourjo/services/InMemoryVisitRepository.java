@@ -8,7 +8,7 @@ import java.util.Map;
 import me.mourjo.entities.Customer;
 import me.mourjo.entities.Store;
 
-public class InMemoryCustomerRepository implements CustomerRepository {
+public class InMemoryVisitRepository implements VisitRepository {
 
 	Map<Store, List<OffsetDateTime>> visits = new HashMap<>();
 

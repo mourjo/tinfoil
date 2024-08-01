@@ -6,7 +6,7 @@ import java.util.Map;
 import me.mourjo.entities.Customer;
 import me.mourjo.entities.Store;
 
-public interface CustomerRepository {
+public interface VisitRepository {
 
 	void recordVisit(Store store, Customer customer, OffsetDateTime time);
 

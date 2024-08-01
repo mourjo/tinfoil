@@ -24,7 +24,7 @@ import org.jooq.Table;
 import org.jooq.impl.DSL;
 
 @Slf4j
-public class PostgresCustomerRepository implements CustomerRepository {
+public class PostgresVisitRepository implements VisitRepository {
 
 	private final String username;
 	private final String password;
@@ -39,14 +39,14 @@ public class PostgresCustomerRepository implements CustomerRepository {
 	private final Field<OffsetDateTime> visitedAtField = field("visited_at", OffsetDateTime.class);
 	private final Asterisk star = asterisk();
 
-	public PostgresCustomerRepository(String host, String port, String database, String username,
+	public PostgresVisitRepository(String host, String port, String database, String username,
 			String password) {
 		this.username = username;
 		this.password = password;
 		connectionString = "jdbc:postgresql://%s:%s/%s".formatted(host, port, database);
 	}
 
-	public PostgresCustomerRepository(String username, String password, String database) {
+	public PostgresVisitRepository(String username, String password, String database) {
 		this("localhost", "5432", database, "justin", "hat");
 	}
 
@@ -116,7 +116,7 @@ public class PostgresCustomerRepository implements CustomerRepository {
 	}
 
 	@SneakyThrows
-	void truncate() {
+	public void truncate() {
 		try (Connection conn = getConnection()) {
 			using(conn)
 					.delete(visitTable)

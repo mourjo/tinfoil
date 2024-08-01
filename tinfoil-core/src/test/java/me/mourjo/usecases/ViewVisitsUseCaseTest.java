@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.Map;
 import me.mourjo.entities.Customer;
 import me.mourjo.entities.Store;
-import me.mourjo.services.CustomerRepository;
-import me.mourjo.services.InMemoryCustomerRepository;
+import me.mourjo.services.VisitRepository;
+import me.mourjo.services.InMemoryVisitRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -22,14 +22,14 @@ class ViewVisitsUseCaseTest {
 	final Clock clock = Clock.fixed(fixedTime.toInstant(), ZoneId.of("Etc/UTC"));
 
 	Customer customer;
-	CustomerRepository repo;
+	VisitRepository repo;
 
 	Store store;
 	ViewVisitsUseCase useCase;
 
 	@BeforeEach
 	void startup() {
-		repo = new InMemoryCustomerRepository();
+		repo = new InMemoryVisitRepository();
 		useCase = new ViewVisitsUseCase(repo, clock);
 		store = new Store("A store");
 		customer = new Customer("A customer");
