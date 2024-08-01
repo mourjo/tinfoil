@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.time.Duration;
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Map;
+import me.mourjo.entities.Store;
 import me.mourjo.services.PostgresVisitRepository;
 import me.mourjo.usecases.TrackVisitUseCase;
 import me.mourjo.usecases.ViewVisitsUseCase;
@@ -47,13 +49,14 @@ class VisitIntegrationTest {
 			Assertions.assertEquals(200, client.get("/visits/all/msen").code());
 
 			Assertions.assertEquals(
-					List.of(new ViewVisitResponse("albert-heijn", List.of("Right now"))),
+					ViewVisitResponse.from(Map.of(new Store("albert-heijn"), List.of("Right now"))),
 					toViewVisitResponse(client.get("/visits/all/msen")));
 
 			clock.tickForward(Duration.ofHours(1));
 
 			Assertions.assertEquals(
-					List.of(new ViewVisitResponse("albert-heijn", List.of("1 hour ago"))),
+					ViewVisitResponse.from(
+							Map.of(new Store("albert-heijn"), List.of("1 hour ago"))),
 					toViewVisitResponse(client.get("/visits/all/msen")));
 		});
 	}
@@ -67,16 +70,16 @@ class VisitIntegrationTest {
 			client.post("/visit/jumbo/msen");
 
 			Assertions.assertEquals(
-					List.of(
-							new ViewVisitResponse("jumbo", List.of("Right now")),
-							new ViewVisitResponse("albert-heijn", List.of("48 minutes ago"))
-					),
+					ViewVisitResponse.from(Map.of(
+							new Store("jumbo"), List.of("Right now"),
+							new Store("albert-heijn"), List.of("48 minutes ago")
+					)),
 					toViewVisitResponse(client.get("/visits/all/msen")));
 		});
 	}
 
-	private List<ViewVisitResponse> toViewVisitResponse(Response s) throws IOException {
-		var typeRef = new TypeReference<List<ViewVisitResponse>>() {
+	private ViewVisitResponse toViewVisitResponse(Response s) throws IOException {
+		var typeRef = new TypeReference<ViewVisitResponse>() {
 		};
 		return jackson.fromJsonString(s.body().string(), typeRef.getType());
 	}
