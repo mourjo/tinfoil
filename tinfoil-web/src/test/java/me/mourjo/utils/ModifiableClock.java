@@ -7,13 +7,21 @@ import java.time.ZoneId;
 import java.time.temporal.TemporalAmount;
 
 public class ModifiableClock extends Clock {
-	private Instant instant;
 
 	private final ZoneId zone;
+	private Instant instant;
 
 	public ModifiableClock(Instant instant, ZoneId zone) {
 		this.instant = instant;
 		this.zone = zone;
+	}
+
+	public static ModifiableClock fixed(Instant instant, ZoneId zone) {
+		return new ModifiableClock(instant, zone);
+	}
+
+	public static ModifiableClock fixed(OffsetDateTime offsetDateTime) {
+		return fixed(offsetDateTime.toInstant(), offsetDateTime.getOffset());
 	}
 
 	@Override
@@ -41,13 +49,5 @@ public class ModifiableClock extends Clock {
 
 	private void set(Instant instant) {
 		this.instant = instant;
-	}
-
-	public static ModifiableClock fixed(Instant instant, ZoneId zone) {
-		return new ModifiableClock(instant, zone);
-	}
-
-	public static ModifiableClock fixed(OffsetDateTime offsetDateTime) {
-		return fixed(offsetDateTime.toInstant(), offsetDateTime.getOffset());
 	}
 }

@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.Map;
 import me.mourjo.entities.Customer;
 import me.mourjo.entities.Store;
-import me.mourjo.services.VisitRepository;
 import me.mourjo.services.InMemoryVisitRepository;
+import me.mourjo.services.VisitRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

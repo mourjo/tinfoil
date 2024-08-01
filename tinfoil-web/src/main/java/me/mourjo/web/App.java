@@ -10,14 +10,6 @@ public class App {
 
 	private Javalin app;
 
-	public void start(int port) {
-		app.start(port);
-	}
-
-	Javalin getApp() {
-		return app;
-	}
-
 	public App(VisitController controller) {
 		this.app = Javalin.create(config -> {
 			config.registerPlugin(new OpenApiPlugin(pluginConfig -> {
@@ -42,5 +34,13 @@ public class App {
 				});
 			});
 		});
+	}
+
+	public void start(int port) {
+		app.start(port);
+	}
+
+	Javalin getApp() {
+		return app;
 	}
 }

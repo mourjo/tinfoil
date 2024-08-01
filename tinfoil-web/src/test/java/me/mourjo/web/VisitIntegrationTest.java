@@ -14,7 +14,6 @@ import me.mourjo.services.PostgresVisitRepository;
 import me.mourjo.usecases.TrackVisitUseCase;
 import me.mourjo.usecases.ViewVisitsUseCase;
 import me.mourjo.utils.ModifiableClock;
-import me.mourjo.web.App;
 import me.mourjo.web.controller.VisitController;
 import me.mourjo.web.dto.ViewVisitResponse;
 import okhttp3.Response;
@@ -24,16 +23,16 @@ import org.junit.jupiter.api.Test;
 
 class VisitIntegrationTest {
 
-	PostgresVisitRepository repo = new PostgresVisitRepository("justin", "hat",
-			"tinfoil_test_db");
-
 	final OffsetDateTime fixedTime = utcOffsetDateTime(2024, 7, 31, 1, 2, 28);
 	final ModifiableClock clock = ModifiableClock.fixed(fixedTime);
+	final JavalinJackson jackson = new JavalinJackson();
+	PostgresVisitRepository repo = new PostgresVisitRepository("justin", "hat",
+			"tinfoil_test_db");
 	final ViewVisitsUseCase viewVisitsUseCase = new ViewVisitsUseCase(repo, clock);
 	final TrackVisitUseCase trackVisitUseCase = new TrackVisitUseCase(repo, clock);
-	final VisitController visitController = new VisitController(viewVisitsUseCase, trackVisitUseCase);
+	final VisitController visitController = new VisitController(viewVisitsUseCase,
+			trackVisitUseCase);
 	final Javalin app = new App(visitController).getApp();
-	final JavalinJackson jackson = new JavalinJackson();
 
 	@BeforeEach
 	void setup() {
@@ -77,7 +76,8 @@ class VisitIntegrationTest {
 	}
 
 	private List<ViewVisitResponse> toViewVisitResponse(Response s) throws IOException {
-		var typeRef = new TypeReference<List<ViewVisitResponse>>(){};
+		var typeRef = new TypeReference<List<ViewVisitResponse>>() {
+		};
 		return jackson.fromJsonString(s.body().string(), typeRef.getType());
 	}
 }

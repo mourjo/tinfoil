@@ -40,7 +40,8 @@ public class VisitController {
 			methods = HttpMethod.GET,
 			responses = {
 					@OpenApiResponse(status = "200"),
-					@OpenApiResponse(status = "400", content = {@OpenApiContent(from = ErrorResponse.class)})
+					@OpenApiResponse(status = "400", content = {
+							@OpenApiContent(from = ErrorResponse.class)})
 			}
 	)
 	public void viewVisits(Context ctx) {
@@ -62,7 +63,8 @@ public class VisitController {
 			methods = HttpMethod.POST,
 			responses = {
 					@OpenApiResponse(status = "200"),
-					@OpenApiResponse(status = "400", content = {@OpenApiContent(from = ErrorResponse.class)})
+					@OpenApiResponse(status = "400", content = {
+							@OpenApiContent(from = ErrorResponse.class)})
 			}
 	)
 	public void trackVisit(Context ctx) {
