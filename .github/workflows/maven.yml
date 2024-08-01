@@ -43,4 +43,4 @@ jobs:
           wait-for: 1m
       - name: Fire requests to the server via curl
         run:
-          curl -s -X 'POST' 'http://localhost:7002/visit/albert-heijn/mourjo' && echo "" && curl -s -X 'GET' 'http://localhost:7001/visits/all/mourjo'
+          curl -s -X 'POST' 'http://localhost:7002/visit/albert-heijn/mourjo' && echo "" && curl -s -X 'GET' 'http://localhost:7002/visits/all/mourjo'
