@@ -21,8 +21,7 @@ public class TrackVisitUseCase {
 		this.clock = clock;
 	}
 
-	public String visit(Store store, Customer customer) {
+	public void visit(Store store, Customer customer) {
 		repository.recordVisit(store, customer, OffsetDateTime.now(clock));
-		return "Welcome, " + customer.getName();
 	}
 }

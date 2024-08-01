@@ -12,6 +12,7 @@ import me.mourjo.services.VisitRepository;
 import me.mourjo.usecases.TrackVisitUseCase;
 import me.mourjo.usecases.ViewVisitsUseCase;
 import me.mourjo.web.dto.ErrorResponse;
+import me.mourjo.web.dto.TrackVisitResponse;
 import me.mourjo.web.dto.ViewVisitResponse;
 
 public class VisitController {
@@ -70,8 +71,8 @@ public class VisitController {
 	public void trackVisit(Context ctx) {
 		String customerName = ctx.pathParam("customerName");
 		String storeName = ctx.pathParam("storeName");
-
 		trackVisitUseCase.visit(new Store(storeName), new Customer(customerName));
 		ctx.status(201);
+		ctx.json(new TrackVisitResponse("Your visit has been recorded"));
 	}
 }
