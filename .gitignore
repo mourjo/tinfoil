@@ -38,3 +38,9 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+
+dependency-reduced-pom.xml
+tinfoil-core/dependency-reduced-pom.xml
+tinfoil-infra/dependency-reduced-pom.xml
+tinfoil-web/dependency-reduced-pom.xml
