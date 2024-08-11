@@ -10,6 +10,26 @@
       <scope>compile</scope>
       <version>1.0-SNAPSHOT</version>
     </dependency>
+    <dependency>
+      <artifactId>jooq</artifactId>
+      <groupId>org.jooq</groupId>
+      <version>3.19.10</version>
+    </dependency>
+    <dependency>
+      <artifactId>jooq-meta</artifactId>
+      <groupId>org.jooq</groupId>
+      <version>3.19.10</version>
+    </dependency>
+    <dependency>
+      <artifactId>jooq-codegen</artifactId>
+      <groupId>org.jooq</groupId>
+      <version>3.19.10</version>
+    </dependency>
+    <dependency>
+      <artifactId>postgresql</artifactId>
+      <groupId>org.postgresql</groupId>
+      <version>42.6.1</version>
+    </dependency>
   </dependencies>
   <modelVersion>4.0.0</modelVersion>
 
