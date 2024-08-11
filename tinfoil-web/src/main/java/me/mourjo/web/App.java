@@ -8,13 +8,13 @@ import me.mourjo.web.controller.VisitController;
 
 public class App {
 
-	private Javalin app;
+	private final Javalin app;
 
 	public App(VisitController controller) {
 		this.app = Javalin.create(config -> {
 			config.registerPlugin(new OpenApiPlugin(pluginConfig -> {
 				pluginConfig.withDefinitionConfiguration((version, definition) -> {
-					definition.withInfo(info -> info.setTitle("Javalin OpenAPI example"));
+					definition.withInfo(info -> info.setTitle("Tinfoil"));
 				}).withDocumentationPath("/mydocs");
 			}));
 
