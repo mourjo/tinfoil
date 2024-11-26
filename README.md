@@ -1,4 +1,4 @@
-# tinfoil
+# tinfoil - A Visit Tracker build on Domain Driven Design 
 
 [![Maven Build with Docker](https://github.com/mourjo/tinfoil/actions/workflows/maven.yml/badge.svg)](https://github.com/mourjo/tinfoil/actions/workflows/maven.yml)
 
